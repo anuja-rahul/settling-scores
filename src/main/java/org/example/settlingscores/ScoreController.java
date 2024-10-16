@@ -38,10 +38,19 @@ public class ScoreController {
         score.setTies(score.getTies() + 1);
         return score;
 
-    }@PostMapping("/score/losses")
+        }
+
+    @PostMapping("/score/losses")
     public Score increaseLosses() {
         score.setLosses(score.getLosses() + 1);
         return score;
+    }
+
+    @PatchMapping("/score/wins")
+    public Score updateWins(@RequestParam(name="new-value") int newValue) {
+        score.setWins(newValue);
+        return score;
+
     }
 
 
