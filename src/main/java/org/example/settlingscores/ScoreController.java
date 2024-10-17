@@ -53,5 +53,11 @@ public class ScoreController {
 
     }
 
+    @PutMapping("/score")
+    public Score replaceScore(@RequestBody Score newScore) {
+        score = newScore;
+        return score;
+    }
+
 
 }

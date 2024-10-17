@@ -1,0 +1,47 @@
+<html lang="en">
+    <head>
+        <title>Settling Scores</title>
+    </head>
+
+    <body>
+        What will be the outcome ? <br/><br/>
+        <a href="#" onclick="playRoshambo('rock')">Rock</a> &nbsp; &nbsp;
+        <a href="#" onclick="playRoshambo('paper')">Paper</a> &nbsp; &nbsp;
+        <a href="#" onclick="playRoshambo('scissors')">Scissors</a> &nbsp; &nbsp;
+    <hr/> <br/>
+    <i><div id="results"></div></i>
+    <br/>
+    <span id="wins"></span>
+    <span id="losses"></span>
+    <span id="ties"></span>
+    </body>
+
+<script>
+    playRoshambo = async function(clientGesture) {
+        url = "http://localhost:8080/score/wins";
+        result = "win";
+
+        if (clientGesture === "rock") {
+            result = "tie";
+            url = "http://localhost:8080/score/ties";
+        }
+        if (clientGesture === "scissors") {
+            result = "loss";
+            url = "http://localhost:8080/score/losses";
+        }
+
+        try {
+            const response = await fetch(url, {method: "POST"});
+            const score = await response.json();
+            document.getElementById("wins").innerHTML = "<b>Wins: </b>" + score.wins;
+            document.getElementById("losses").innerHTML = "<b>Losses: </b>" + score.losses;
+            document.getElementById("ties").innerHTML = "<b>Ties: </b>" + score.ties;
+            document.getElementById("results").innerHTML = "The result was a: " + result;
+        } catch (error) {
+            console.log(error.message);
+        }
+
+        document.getElementById("results").innerHTML = "The result was a:" + result;
+    }
+</script>
+</html>
